@@ -30,15 +30,20 @@ public class ABMovement : MonoBehaviour
         }
         if(ifAggro)
         {
-            transform.position = Movement(protectedArea.playerPosition, movementSpeed * 2);
+            ColliderDistance2D colliderDistance = 
+                gameObject.GetComponent<Collider2D>()
+                .Distance(protectedArea.playerPosition.GetComponent<Collider2D>());
+
+            if(colliderDistance.distance > 0.05f)
+            {
+                transform.position = 
+                    Movement(protectedArea.playerPosition.transform.position, movementSpeed * 2);
+            }
+            
         }
     }
     Vector3 Movement(Vector3 position, float speed)
     {
-        return Vector2.MoveTowards(transform.position, position, movementSpeed * Time.deltaTime);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
+        return Vector2.MoveTowards(transform.position, position, speed * Time.deltaTime);
     }
 }

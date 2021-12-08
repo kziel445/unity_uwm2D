@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnterArea : MonoBehaviour
 {
     internal bool ifPlayerIn = false;
-    internal Vector2 playerPosition;
+    internal GameObject playerPosition;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.tag == "Player")
         {
             ifPlayerIn = true;
-            playerPosition = collision.gameObject.transform.position;
+            playerPosition = collision.gameObject;
         }
         
     }
