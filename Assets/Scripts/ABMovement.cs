@@ -11,7 +11,8 @@ public class ABMovement : MonoBehaviour
     public bool ifAggro = false;
 
     [SerializeField] EnterArea protectedArea;
-
+    [SerializeField] Animator animator;
+    bool faceRight = true;
     private void Start()
     {
         actualPoint = pointA;
@@ -39,11 +40,24 @@ public class ABMovement : MonoBehaviour
                 transform.position = 
                     Movement(protectedArea.playerPosition.transform.position, movementSpeed * 2);
             }
-            
-        }
+            else animator.SetFloat("moving", 0);
+        }        
     }
     Vector3 Movement(Vector3 position, float speed)
     {
-        return Vector2.MoveTowards(transform.position, position, speed * Time.deltaTime);
+        animator.SetFloat("moving", 1);
+        if (gameObject.transform.position.x < position.x && !faceRight) Flip();
+        else if (gameObject.transform.position.x > position.x && faceRight) Flip();
+
+        return Vector2.MoveTowards(
+            transform.position, 
+            new Vector2(position.x, gameObject.transform.position.y),
+            speed * Time.deltaTime);
+    }
+    void Flip()
+    {
+        faceRight = !faceRight;
+        transform.Rotate(Vector2.up * 180);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z * -1);
     }
 }
