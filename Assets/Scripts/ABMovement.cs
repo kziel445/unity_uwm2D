@@ -57,7 +57,10 @@ public class ABMovement : MonoBehaviour
     void Flip()
     {
         faceRight = !faceRight;
-        transform.Rotate(Vector2.up * 180);
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z * -1);
+        transform.localScale = new Vector3(
+            transform.localScale.x * -1f,
+            transform.localScale.y,
+            transform.localScale.z);
+        
     }
 }
